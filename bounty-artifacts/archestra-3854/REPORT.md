@@ -57,4 +57,5 @@ Manual browser screenshot verification was not performed because no local authen
 
 ## Scope and safety
 
+
 No production probing was performed. This is a prepared implementation artifact for a public feature/security-accountability bounty while direct upstream PR creation is blocked.
