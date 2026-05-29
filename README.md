@@ -6,12 +6,14 @@ Sensitivity Diagnostic"*.
 
 **Anonymous mirror (double-blind review):**
 <https://anonymous.4open.science/r/NeurIPS2026ED-CV2024-Audit/>
-## Bounty Artifact: Archestra #3854
 
-This repository contains a bounty artifact implementation for [archestra-ai/archestra#3854](https://github.com/archestra-ai/archestra/issues/3854): **Admin Audit Log Implementation**.
+## Bounty Artifact Notice
 
-The implementation report is available at [`bounty-artifacts/archestra-3854/REPORT.md`](bounty-artifacts/archestra-3854/REPORT.md).
+This branch contains a bounty artifact for **archestra-ai/archestra#3854** — an admin audit log implementation report. The artifact is maintained in `bounty-artifacts/archestra-3854/` and documents a complete admin-only audit log surface for organization activity.
 
+- Backend: authenticated mutating API request recording, `GET /api/audit-logs` with pagination/sorting/filters/RBAC
+- Frontend: Settings > Audit Logs with search, filters, sorting, and pagination
+- Verification: passing backend/frontend/shared tests, type-checks, lints, `drizzle-kit check`, and `git diff --check`
 
 This repository provides:
 
@@ -20,6 +22,7 @@ This repository provides:
    metadata only (no image bytes), under CC-BY 4.0.
 2. **Source code** reproducing every analysis in the paper:
    perceptual-hash audit (pHash, dHash, PDQ), pixel NCC verification,
+   internal CV2024 train/val leak check, video-prefix attribution,
    label-inheritance audit, Kvasir-origin-removed split generation,
    fixed-list retraining contrasts, direct evaluation on the
    organizer-released AIIMS test, and auxiliary split / test-time
@@ -40,7 +43,6 @@ To verify that the released CSVs and result JSONs are internally
 consistent and reproduce the paper's headline numbers, run the
 consistency check:
 
-
 ```bash
 bash scripts/run_smoke_test.sh
 ```
@@ -56,6 +58,12 @@ This performs 24 read-only checks across:
 4. **Headline fixed-list retraining contrast** — recomputes
    $\Delta_{\texttt{le6}}{=}{-}0.213\pm 0.005$ from the released
    fixed-list result JSONs.
+
+## Bounty Artifact
+
+The bounty artifact for archestra-ai/archestra#3854 is located at:
+
+
 5. **100% KVASIR pHash claim** — recomputes from
    `artifacts/annotations/cv2024_KVASIR_phash_annotated.csv`.
 6. **Evidence-and-scope summary** — recomputes the consolidated source,
