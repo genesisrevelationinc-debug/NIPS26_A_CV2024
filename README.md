@@ -1,4 +1,4 @@
-# Auditing the Capsule Vision 2024 Challenge — Code and Data
+# Auditing the Capsule Vision 2024 Challenge — Code and Data (Bounty Artifact)
 
 This repository accompanies the paper *"Auditing Capsule Vision 2024:
 Within-Split Train-to-Validation Re-Exposure and a Kvasir-Channel
@@ -6,6 +6,12 @@ Sensitivity Diagnostic"*.
 
 **Anonymous mirror (double-blind review):**
 <https://anonymous.4open.science/r/NeurIPS2026ED-CV2024-Audit/>
+## Bounty Artifact: Archestra #3854
+
+This repository contains a bounty artifact implementation for [archestra-ai/archestra#3854](https://github.com/archestra-ai/archestra/issues/3854): **Admin Audit Log Implementation**.
+
+The implementation report is available at [`bounty-artifacts/archestra-3854/REPORT.md`](bounty-artifacts/archestra-3854/REPORT.md).
+
 
 This repository provides:
 
@@ -14,7 +20,6 @@ This repository provides:
    metadata only (no image bytes), under CC-BY 4.0.
 2. **Source code** reproducing every analysis in the paper:
    perceptual-hash audit (pHash, dHash, PDQ), pixel NCC verification,
-   internal CV2024 train/val leak check, video-prefix attribution,
    label-inheritance audit, Kvasir-origin-removed split generation,
    fixed-list retraining contrasts, direct evaluation on the
    organizer-released AIIMS test, and auxiliary split / test-time
@@ -34,6 +39,7 @@ licenses; see `DATA_CARD.md`.
 To verify that the released CSVs and result JSONs are internally
 consistent and reproduce the paper's headline numbers, run the
 consistency check:
+
 
 ```bash
 bash scripts/run_smoke_test.sh
