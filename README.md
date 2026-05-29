@@ -1,4 +1,28 @@
-# Auditing the Capsule Vision 2024 Challenge — Code and Data
+## Bounty reference
+
+Target: archestra-ai/archestra#3854
+
+## Report artifact
+
+https://github.com/eunseobchoi/NIPS26_A_CV2024/b
+
+## Summary
+
+Prepared branch: `bounty-3854-audit-logs`
+
+The implementation adds an admin-only audit log surface for organization activity:
+
+It records authenticated mutating API requests in a new `audit_logs` table
+It exposes `GET /api/audit-logs` with pagination, sorting, filters, and RBAC
+It adds Settings > Audit Logs with search, user/method/method/param
+
+## Verification
+
+The prepared artifact records passing backend/frontend/shared tests, type-checks, lints, `drizzle-kit check`, and `git diff --check`.
+
+## Scope and safety
+
+No production probing was performed. This is a public implementation artifact while direct upstream PR creation is blocked.
 
 This repository accompanies the paper *"Auditing Capsule Vision 2024:
 Within-Split Train-to-Validation Re-Exposure and a Kvasir-Channel
@@ -47,30 +71,9 @@ This performs 24 read-only checks across:
    entries match `checksums.txt`.
 3. **CSV row counts** — `le0/le2/le6/le6_strict` train and val and
    `le6_plus_internal` validation match `DATA_CARD.md`.
-
-### Files included vs. files that must be regenerated
-
-## Bounty Implementation Report
-
-This repository also contains a bounty implementation artifact for admin audit log functionality:
-
-- **Target**: archestra-ai/archestra#3854
-- **Branch**: `bounty-3854-audit-logs`
-- **Artifact Location**: `bounty-artifacts/archestra-3854/REPORT.md`
-- **Commit**: `77adfe1448f0804472d23cfd9a8235e386bde004`
-
-### Implementation Summary
-
-The implementation adds an admin-only audit log surface for organization activity:
-
-- Records authenticated mutating API requests in a new `audit_logs` table
-- Exposes `GET /api/audit-logs` with pagination, sorting, filters, and RBAC
-- Adds Settings > Audit Logs with search, user/method/status/date filters, sorting, and pagination
-- Updates generated OpenAPI and shared API client types
-
-The audit hook records user, organization, action/route, method, path, response status, IP address, user agent, request ID, and route params. It intentionally does not store request bodies.
-
-**Note**: This is a local implementation artifact while direct upstream PR creation is blocked.
+4. **Headline fixed-list retraining contrast** — recomputes
+   $\Delta_{\texttt{le6}}{=}{-}0.213\pm 0.005$ from the released
+   fixed-list result JSONs.
 5. **100% KVASIR pHash claim** — recomputes from
    `artifacts/annotations/cv2024_KVASIR_phash_annotated.csv`.
 6. **Evidence-and-scope summary** — recomputes the consolidated source,
