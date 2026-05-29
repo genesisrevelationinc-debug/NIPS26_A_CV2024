@@ -57,50 +57,58 @@ Manual browser screenshot verification was not performed because no local authen
 
 ## Scope and safety
 
-# Archestra #3854 Bounty Artifact: Admin Audit Log Implementation Report
+# Archestra #3854 Bounty: Admin Audit Log Implementation
 
-**Target:** [archestra-ai/archestra#3854](https://github.com/archestra-ai/archestra/issues/3854)  
-**Bounty:** $250 (labeled `💎 Bounty`)  
-**Assignee:** `abhinav-m22`  
-**Verified:** 2026-05-12 via GitHub connector  
-**Prepared Branch:** `bounty-3854-audit-logs`  
-**Artifact Commit:** `77adfe1448f0804472d23cfd9a8235e386bde004`
+## Overview
 
----
+This implementation adds an admin-only audit log system for organization activity monitoring.
 
-## Summary
+## Implementation Summary
 
-This implementation adds an admin-only audit log surface for organization activity. It records authenticated mutating API requests and exposes a secure, paginated, filterable admin interface for reviewing organizational activity.
+### Database Schema Changes
 
----
+Added new `audit_logs` table:
 
-## Implementation Details
+- Records all authenticated mutating API requests
+- Stores: user, organization, action/route, method, path, response status, IP address, user agent, request ID, and route params
+- Does not store request bodies (for security/privacy reasons)
 
-### Database Schema
+### API Endpoints
 
-A new `audit_logs` table stores:
+Added new endpoint:
+- `GET /api/audit-logs` with pagination, sorting, and filters
+- Protected by RBAC (Role-Based Access Control) for admin access only
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID (PK) | Unique identifier |
-| `user_id` | UUID (FK) | Authenticated user performing the action |
-| `organization_id` | UUID (FK) | Organization context |
-| `action` | VARCHAR | Human-readable action description |
-| `route` | VARCHAR | API route/endpoint |
-| `method` | VARCHAR | HTTP method (GET, POST, PUT, DELETE, etc.) |
-| `path` | VARCHAR | Request path |
-| `response_status` | INTEGER | HTTP response status code |
-| `ip_address` | VARCHAR | Client IP address |
-| `user_agent` | VARCHAR | Client user agent string |
-| `request_id` | VARCHAR | Unique request identifier for tracing |
-| `route_params` | JSONB | Parsed route parameters |
-| `created_at` | TIMESTAMP | Record creation time |
+### Frontend Changes
 
-**Intentionally excluded:** Request bodies are NOT stored to avoid capturing sensitive data.
+Added Settings > Audit Logs page with:
+- Search functionality
+- User filter capabilities
+- Method filter capabilities
+- Status filter capabilities
+- Date range filtering
+- Column sorting
+- Pagination support
 
-### Backend API
+### Technical Implementation
 
-**New Endpoint:**
+The audit system hooks into authenticated mutating API requests and records:
+
+- User information (ID, organization)
+- Request details (method, path, action/route)
+- Response metadata (status code)
+- Client information (IP address, user agent)
+- Request correlation (request ID)
+- Request parameters
+
+
+### Security Features
+
+- Admin-only access control to prevent unauthorized viewing
+- No storage of request bodies to protect sensitive data
+- Full RBAC integration for access control
+
+## File Changes Structure
 
 
 No production probing was performed. This is a prepared implementation artifact for a public feature/security-accountability bounty while direct upstream PR creation is blocked.
