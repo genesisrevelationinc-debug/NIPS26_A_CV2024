@@ -57,5 +57,50 @@ Manual browser screenshot verification was not performed because no local authen
 
 ## Scope and safety
 
+# Archestra #3854 Bounty Artifact: Admin Audit Log Implementation Report
+
+**Target:** [archestra-ai/archestra#3854](https://github.com/archestra-ai/archestra/issues/3854)  
+**Bounty:** $250 (labeled `💎 Bounty`)  
+**Assignee:** `abhinav-m22`  
+**Verified:** 2026-05-12 via GitHub connector  
+**Prepared Branch:** `bounty-3854-audit-logs`  
+**Artifact Commit:** `77adfe1448f0804472d23cfd9a8235e386bde004`
+
+---
+
+## Summary
+
+This implementation adds an admin-only audit log surface for organization activity. It records authenticated mutating API requests and exposes a secure, paginated, filterable admin interface for reviewing organizational activity.
+
+---
+
+## Implementation Details
+
+### Database Schema
+
+A new `audit_logs` table stores:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | UUID (PK) | Unique identifier |
+| `user_id` | UUID (FK) | Authenticated user performing the action |
+| `organization_id` | UUID (FK) | Organization context |
+| `action` | VARCHAR | Human-readable action description |
+| `route` | VARCHAR | API route/endpoint |
+| `method` | VARCHAR | HTTP method (GET, POST, PUT, DELETE, etc.) |
+| `path` | VARCHAR | Request path |
+| `response_status` | INTEGER | HTTP response status code |
+| `ip_address` | VARCHAR | Client IP address |
+| `user_agent` | VARCHAR | Client user agent string |
+| `request_id` | VARCHAR | Unique request identifier for tracing |
+| `route_params` | JSONB | Parsed route parameters |
+| `created_at` | TIMESTAMP | Record creation time |
+
+**Intentionally excluded:** Request bodies are NOT stored to avoid capturing sensitive data.
+
+### Backend API
+
+**New Endpoint:**
+
 
 No production probing was performed. This is a prepared implementation artifact for a public feature/security-accountability bounty while direct upstream PR creation is blocked.
